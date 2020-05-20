@@ -1,0 +1,8 @@
+*.prjx
+**/tooldata/
+*.log
+**/component/
+**/designer/
+**/simulation/
+**/smartgen/
+**/synthesis/
