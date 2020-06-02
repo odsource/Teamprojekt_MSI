@@ -16,7 +16,7 @@ ENTITY aufgabe2 IS
 END aufgabe2;
 
 ARCHITECTURE structure OF aufgabe2 IS
-   CONSTANT RSTDEF: std_logic := '1';
+   CONSTANT RSTDEF: std_logic := '0';
    CONSTANT CNTLEN: natural := 16;
 
    COMPONENT sync_module IS
@@ -71,7 +71,7 @@ BEGIN
 
    swrst <= NOT RSTDEF;
 
-   din <= "00000000" & sw;
+   din <= "00000000" & not(sw);
 
    u1: sync_module
    GENERIC MAP(RSTDEF => RSTDEF)
