@@ -14,7 +14,7 @@ ENTITY aufgabe3 IS
 END aufgabe3;
 
 ARCHITECTURE structure OF aufgabe3 IS
-   CONSTANT RSTDEF: std_logic := '1';
+   CONSTANT RSTDEF: std_logic := '0';
 
    COMPONENT core
       GENERIC(RSTDEF: std_logic);
