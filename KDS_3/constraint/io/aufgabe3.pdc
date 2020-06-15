@@ -282,4 +282,4 @@ set_io {dp}            \
 # I/O constraints
 # 
 
-#net clk50 period = 50 MHz ;
+define_global_attribute syn_ramstyle {lsram}
