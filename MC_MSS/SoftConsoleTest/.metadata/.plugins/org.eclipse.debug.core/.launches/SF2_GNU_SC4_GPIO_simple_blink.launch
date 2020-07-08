@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.robotframework.ide.remoteRobotLaunchConfiguration">
+    <stringAttribute key="Agent connection host" value="127.0.0.1"/>
+    <stringAttribute key="Agent connection port" value="43981"/>
+    <stringAttribute key="Agent connection timeout" value="30"/>
+    <stringAttribute key="Project name" value="SF2_GNU_SC4_GPIO_simple_blink"/>
+    <stringAttribute key="Remote agent" value="false"/>
+    <stringAttribute key="Version of configuration" value="1"/>
+    <stringAttribute key="process_factory_id" value="org.robotframework.ide.launch.process.factory"/>
+</launchConfiguration>
