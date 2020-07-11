@@ -18,24 +18,35 @@ END core;
 
 ARCHITECTURE structure OF core IS
 
-	COMPONENT ram_block IS
+	COMPONENT ram_test IS -- anstatt ram_block wurde ram_test benutzt (ram_block ist eigens entwickelt, ram_test ist eine generierte Komponente)
     PORT (addra: IN  std_logic_VECTOR(9 DOWNTO 0);
          addrb:  IN  std_logic_VECTOR(9 DOWNTO 0);
          clka:   IN  std_logic;
          clkb:   IN  std_logic;
-         douta:  OUT std_logic_VECTOR(15 DOWNTO 0);
-         doutb:  OUT std_logic_VECTOR(15 DOWNTO 0);
+         douta:  OUT std_logic_VECTOR(17 DOWNTO 0);
+         doutb:  OUT std_logic_VECTOR(17 DOWNTO 0);
          ena:    IN  std_logic;
          enb:    IN  std_logic);
 	END COMPONENT;
+    
+    COMPONENT mult18x18 is
+    -- Port list
+    port(
+        -- Inputs
+        A    : in  std_logic_vector(17 downto 0);
+        B    : in  std_logic_vector(17 downto 0);
+        -- Outputs
+        P : out std_logic_vector(35 downto 0)
+        );
+    end COMPONENT;
 	
 	type TState IS (IDLE, RM, RMA, A, M, SET);
 	SIGNAL state: TState := IDLE;
 	
 	SIGNAL addra: std_logic_VECTOR(9 DOWNTO 0);
     SIGNAL addrb: std_logic_VECTOR(9 DOWNTO 0);
-	SIGNAL douta: std_logic_VECTOR(15 DOWNTO 0);
-	SIGNAL doutb: std_logic_VECTOR(15 DOWNTO 0);
+	SIGNAL douta: std_logic_VECTOR(17 DOWNTO 0);
+	SIGNAL doutb: std_logic_VECTOR(17 DOWNTO 0);
 	SIGNAL extdouta: std_logic_VECTOR(17 DOWNTO 0);
 	SIGNAL extdoutb: std_logic_VECTOR(17 DOWNTO 0);
     SIGNAL enr:   std_logic;
@@ -49,7 +60,7 @@ ARCHITECTURE structure OF core IS
 
 BEGIN
 
-	rb: ram_block
+	rb: ram_test  -- auch hier wurde ram_test statt ram_block verwendet
 	PORT MAP(
 		douta 	=> douta,
         doutb	=> doutb,
@@ -60,12 +71,12 @@ BEGIN
         ena		=> enr,
         enb		=> enr
 	);
-	extdouta <= SXT(douta,18);
-	extdoutb <= SXT(doutb,18);
+	--extdouta <= SXT(douta,18);
+	--extdoutb <= SXT(doutb,18);
 	mult: MULT18X18
 	PORT MAP(
-		A		=> extdouta,
-		B		=> extdoutb,
+		A		=> douta, --extdouta,
+		B		=> doutb, --extdoutb,
 		--C		=> clk,
 		--CE		=> ce,
 		--R		=> rst,

@@ -11,19 +11,23 @@
 #include "drivers/mss_gpio/mss_gpio.h"
 #include "CMSIS/system_m2sxxx.h"
 #include "drivers/mss_timer/mss_timer.h"
+#include "base.h"
+#include "event.h"
+#include "TA0.h"
 
 /*==============================================================================
   Private functions.
  */
-static void delay(void);
+//static void delay(void);
 static void Timer_init();
-void Timer1_IRQHandler( void );
+//void Timer1_IRQHandler( void );
 
 /*==============================================================================
  * main() function.
  */
 int main()
 {
+	Int cnt = 0;
     /*
      * Initialize MSS GPIOs.
      */
@@ -41,25 +45,36 @@ int main()
      */
     for(;;)
     {
-
-        /*
-         * Decrement delay counter.
-         */
-        delay();
-        
-
-        /*
-         * Toggle GPIO output pattern by doing an exclusive OR of all
-         * pattern bits with ones.
-         */
-
-    }
+    	wait_for_event();
+    	if (tst_event(EVENT_BTN1)) {
+			clr_event(EVENT_BTN1);
+			if (++cnt GT MUSTER6) {
+			cnt = 0;
+			}
+			set_blink_muster(cnt);
+		}
+		if (tst_event(EVENT_BTN2)) {
+			clr_event(EVENT_BTN2);
+			uint32_t gpio_pattern;
+			gpio_pattern = MSS_GPIO_get_outputs();
+			gpio_pattern ^= 0xFFFFFFFF;
+			MSS_GPIO_set_outputs( gpio_pattern );
+		}
+		// im Falle eines Event-Errors leuchtet die LED dauerhaft
+		if (is_event_error()) {
+			uint32_t gpio_pattern;
+			gpio_pattern = 0xFFFFFFFF;
+			MSS_GPIO_set_outputs( gpio_pattern );
+		}
+	}
 }
 
 /*==============================================================================
   Delay between displays of the watchdog counter value.
  */
-static void delay(void)
+/*
+
+ static void delay(void)
 {
     volatile uint32_t delay_count = SystemCoreClock / 128u;
     
@@ -68,16 +83,17 @@ static void delay(void)
         --delay_count;
     }
 }
-
+*/
 
 static void Timer_init(void)
 {
 	MSS_TIM1_init(MSS_TIMER_PERIODIC_MODE);
 	MSS_TIM1_start();
 	MSS_TIM1_enable_irq();
-	MSS_TIM1_load_immediate(10000000);
+	MSS_TIM1_load_immediate(50000000);
 }
 
+/*
 void Timer1_IRQHandler( void )
 {
 	uint32_t gpio_pattern;
@@ -86,3 +102,4 @@ void Timer1_IRQHandler( void )
 	MSS_GPIO_set_outputs( gpio_pattern );
 	MSS_TIM1_clear_irq();
 }
+*/

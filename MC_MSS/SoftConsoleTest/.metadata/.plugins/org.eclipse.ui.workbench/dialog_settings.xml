@@ -22,6 +22,8 @@
 		<item key="WizardFileSystemResourceImportPage1.STORE_CREATE_CONTAINER_STRUCTURE_ID" value="false"/>
 		<item key="WizardFileSystemResourceImportPage1.STORE_OVERWRITE_EXISTING_RESOURCES_ID" value="false"/>
 		<list key="WizardFileSystemResourceImportPage1.STORE_SOURCE_NAMES_ID">
+			<item value="D:\OneDrive\Christoph\Studium\Master - MSI\Teamprojekt\Übungen\Mikroprozessorsysteme\MPS\Uebung\Lösungen\MPS-master\MPS1"/>
+			<item value="D:\OneDrive\Christoph\Studium\Bachelor - AIN\8_Vertiefungen\CNE\Mikroprozessorsysteme\MPS\Uebung"/>
 			<item value="F:\FPGA_Development\MC_MSS\firmware"/>
 			<item value="F:\FPGA_Development\MC_MSS"/>
 		</list>

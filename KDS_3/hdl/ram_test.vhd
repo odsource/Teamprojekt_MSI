@@ -20,8 +20,8 @@ entity ram_test is
          addrb: IN std_logic_VECTOR(9 DOWNTO 0);
          clka:  IN std_logic;
          clkb:  IN std_logic;
-         douta: OUT std_logic_VECTOR(15 DOWNTO 0);
-         doutb: OUT std_logic_VECTOR(15 DOWNTO 0);
+         douta: OUT std_logic_vector(17 downto 0);
+         doutb: OUT std_logic_vector(17 downto 0);
          ena:   IN std_logic;
          enb:   IN std_logic);
 end ram_test;
@@ -71,9 +71,9 @@ component RAM1K18
         B_WMODE       : in  std_logic;
         SII_LOCK      : in  std_logic;
         -- Outputs
-        A_DOUT        : out std_logic_vector(15 downto 0);
+        A_DOUT        : out std_logic_vector(17 downto 0);
         BUSY          : out std_logic;
-        B_DOUT        : out std_logic_vector(15 downto 0)
+        B_DOUT        : out std_logic_vector(17 downto 0)
         );
 end component;
 
@@ -89,28 +89,28 @@ RAM1K18_0 : RAM1K18
         A_CLK         => clka,
         A_DOUT_CLK    => clka,
         A_ARST_N      => '1',
-        A_DOUT_EN     => ,
-        A_DOUT_ARST_N => ,
-        A_DOUT_SRST_N => ,
+        A_DOUT_EN     => ena,
+        A_DOUT_ARST_N => '1',
+        A_DOUT_SRST_N => '1',
         B_CLK         => clkb,
         B_DOUT_CLK    => clkb,
         B_ARST_N      => '1',
-        B_DOUT_EN     => ,
-        B_DOUT_ARST_N => ,
-        B_DOUT_SRST_N => ,
-        A_EN          => ena,
-        A_DOUT_LAT    => ,
-        A_WMODE       => ,
-        B_EN          => enb,
-        B_DOUT_LAT    => ,
-        B_WMODE       => ,
-        SII_LOCK      => ,
-        A_BLK         => ,
-        A_DIN         => (others => 0),
+        B_DOUT_EN     => enb,
+        B_DOUT_ARST_N => '1',
+        B_DOUT_SRST_N => '1',
+        A_EN          => '1',
+        A_DOUT_LAT    => '0',
+        A_WMODE       => '1',
+        B_EN          => '1',
+        B_DOUT_LAT    => '0',
+        B_WMODE       => '1',
+        SII_LOCK      => '0',
+        A_BLK         => "111",
+        A_DIN         => "000000000000000000",
         A_ADDR        => addra & "0000",
         A_WEN         => "00",
-        B_BLK         => ,
-        B_DIN         => (others => 0),
+        B_BLK         => "111",
+        B_DIN         => "000000000000000000",
         B_ADDR        => addrb & "0000",
         B_WEN         => "00",
         A_WIDTH       => "100",
@@ -118,7 +118,7 @@ RAM1K18_0 : RAM1K18
         -- Outputs
         BUSY          => OPEN,
         A_DOUT        => douta,
-        B_DOUT        => doutb 
+        B_DOUT        => doutb
         );
 
 end RTL;
