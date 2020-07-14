@@ -40,8 +40,8 @@ ARCHITECTURE structure OF core IS
         );
     end COMPONENT;
 	
-	type TState IS (IDLE, RM, RMA, A, M, SET);
-	SIGNAL state: TState := IDLE;
+	type TState IS (INIT, IDLE, RM, RMA, A, M, SET);
+	SIGNAL state: TState := INIT;
 	
 	SIGNAL addra: std_logic_VECTOR(9 DOWNTO 0);
     SIGNAL addrb: std_logic_VECTOR(9 DOWNTO 0);
@@ -55,6 +55,7 @@ ARCHITECTURE structure OF core IS
 	SIGNAL multres: std_logic_vector(35 DOWNTO 0);
 	SIGNAL result: std_logic_vector(43 DOWNTO 0);
 	SIGNAL counter: std_logic_vector(7 DOWNTO 0);
+    SIGNAL s: std_logic := '0';
 	
 	
 
@@ -96,6 +97,20 @@ BEGIN
 			res <= (others => '0');
 		elsif rising_edge(clk) then
 				case state is
+                    when INIT =>
+                        addra <= (others => '0');
+                        addrb <= "0100000000";
+                        counter <= (others => '0');
+                        enr <= '1';
+                        s <= '1';
+                        if s = '1' then
+                            addra(7 downto 0) <= counter;
+                            addrb(7 downto 0) <= counter;
+                            counter <= counter + '1';
+                            if s = '0' then
+                                state <= IDLE;
+                            end if;
+                        end if;
 					when IDLE =>
 						enr <= '0';
 						enadd <= '0';
