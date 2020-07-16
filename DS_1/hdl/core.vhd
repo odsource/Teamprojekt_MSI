@@ -22,85 +22,53 @@ use IEEE.std_logic_1164.all;
 
 entity core is
 port (
-    clk:  IN  std_logic;
-	sw_input : IN  std_logic;
-    led : OUT std_logic;
-    LED1 : OUT std_logic
+    --<port_name> : <direction> <type>;
+	switch : IN  std_logic_vector(7 DOWNTO 0); -- example
+    LED : OUT std_logic_vector(1 downto 0)  -- example
+    --<other_ports>;
 );
 end core;
 architecture architecture_core of core is
-   -- signal, component etc. declarations
-COMPONENT sw_register is
-port(
-        -- Inputs
-        clk:  IN  std_logic;
-        sw  : in  std_logic;
-        -- Outputs
-        mss : out std_logic
-        );
-END COMPONENT;
-
-COMPONENT led_register is
-port(
-        -- Inputs
-        clk:  IN  std_logic;
-        mss_led  : in  std_logic;
-        -- Outputs
-        led_reg : out std_logic
-        );
-END COMPONENT;
-
 COMPONENT MSS2F is
-port(
+    -- Port list
+    port(
         -- Inputs
-        DEVRST_N : in  std_logic;
-        GPIO_1   : in  std_logic;
+        AMBA_MASTER_0_HADDR_M0     : in  std_logic_vector(31 downto 0);
+        AMBA_MASTER_0_HBURST_M0    : in  std_logic_vector(2 downto 0);
+        AMBA_MASTER_0_HMASTLOCK_M0 : in  std_logic;
+        AMBA_MASTER_0_HPROT_M0     : in  std_logic_vector(3 downto 0);
+        AMBA_MASTER_0_HSIZE_M0     : in  std_logic_vector(2 downto 0);
+        AMBA_MASTER_0_HTRANS_M0    : in  std_logic_vector(1 downto 0);
+        AMBA_MASTER_0_HWDATA_M0    : in  std_logic_vector(31 downto 0);
+        AMBA_MASTER_0_HWRITE_M0    : in  std_logic;
+        DEVRST_N                   : in  std_logic;
+        GPIO_1_F2M                 : in  std_logic;
         -- Outputs
-        GPIO_0   : out std_logic
+        AMBA_MASTER_0_HRDATA_M0    : out std_logic_vector(31 downto 0);
+        AMBA_MASTER_0_HREADY_M0    : out std_logic;
+        AMBA_MASTER_0_HRESP_M0     : out std_logic_vector(1 downto 0);
+        GPIO_0_M2F                 : out std_logic
         );
 end COMPONENT;
+    -- Inputs
+	signal AMBA_MASTER_0_HADDR_M0     : std_logic_vector(31 downto 0);
+    signal AMBA_MASTER_0_HBURST_M0    : std_logic_vector(2 downto 0);
+    signal AMBA_MASTER_0_HMASTLOCK_M0 : std_logic;
+    signal AMBA_MASTER_0_HPROT_M0     : std_logic_vector(3 downto 0);
+    signal AMBA_MASTER_0_HSIZE_M0     : std_logic_vector(2 downto 0);
+    signal AMBA_MASTER_0_HTRANS_M0    : std_logic_vector(1 downto 0);
+    signal AMBA_MASTER_0_HWDATA_M0    : std_logic_vector(31 downto 0);
+    signal AMBA_MASTER_0_HWRITE_M0    : std_logic;
+    signal DEVRST_N                   : std_logic;
+    signal GPIO_1_F2M                 : std_logic;
+    
+    -- Outputs
+    signal AMBA_MASTER_0_HRDATA_M0    : std_logic_vector(31 downto 0);
+    signal AMBA_MASTER_0_HREADY_M0    : std_logic;
+    signal AMBA_MASTER_0_HRESP_M0     : std_logic_vector(1 downto 0);
+    signal GPIO_0_M2F                 : std_logic;
 
-SIGNAL sw: std_logic;
-SIGNAL mss: std_logic;
-
-SIGNAL mss_led: std_logic;
-SIGNAL led_reg: std_logic;
-
-SIGNAL DEVRST_N: std_logic := '0';
-SIGNAL GPIO_1: std_logic;
-SIGNAL GPIO_0: std_logic;
 begin
 
---LED1 <= '0';
-
-sw_r : sw_register
-    port map( 
-        -- Input
-        clk => clk,
-        sw         => sw,
-        -- Output
-        mss        => mss
-        );
-    sw <= sw_input;
-   
-led_r : led_register
-    port map(
-        -- Input
-        clk => clk,
-        mss_led         => mss_led,
-        -- Output
-        led_reg        => led_reg
-        );
-    led <= led_reg;
-
-mc : MSS2F
-    port map(
-        -- Inputs
-        DEVRST_N => DEVRST_N,
-        GPIO_1 => GPIO_1,
-        -- Outputs
-        GPIO_0 => GPIO_0
-        );
-    GPIO_1 <= mss;
-    mss_led <= GPIO_0;
+   -- architecture body
 end architecture_core;
