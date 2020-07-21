@@ -9,6 +9,8 @@
 library ieee;
 use ieee.std_logic_1164.all;
 USE ieee.std_logic_unsigned.ALL;
+USE ieee.numeric_std.ALL;
+USE ieee.std_logic_arith.ALL;
 
 library smartfusion2;
 use smartfusion2.all;
@@ -52,7 +54,7 @@ COMPONENT ram_dp is
         );
 end COMPONENT;
 
-SIGNAL counter: integer range 0 to 2**8-1;
+SIGNAL counter: std_logic_vector(7 DOWNTO 0);
 SIGNAL a_data: std_logic_vector(17 downto 0) := "000000000000000000";
 SIGNAL b_data: std_logic_vector(17 downto 0) := "000000000000000000";
 SIGNAL awen: std_logic := '0';
@@ -91,8 +93,9 @@ begin
             awen <= '0';
             bwen <= '0';
         end if;
-        
-        counter <= (counter+1) mod 2**8;
+        a_data(7 downto 0) <= counter;
+        b_data(7 downto 0) <= counter;
+        counter <= counter + '1';
     else
     
     end if;

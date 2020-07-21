@@ -55,9 +55,8 @@ ARCHITECTURE structure OF core IS
 	SIGNAL multres: std_logic_vector(35 DOWNTO 0);
 	SIGNAL result: std_logic_vector(43 DOWNTO 0);
 	SIGNAL counter: std_logic_vector(7 DOWNTO 0);
-    SIGNAL s: std_logic := '0';
 	
-	
+	SIGNAL s: std_logic := '1';
 
 BEGIN
 
@@ -90,7 +89,7 @@ BEGIN
 	steuerwerk: PROCESS(rst, clk)
 	BEGIN
 		if rst = RSTDEF then
-			state <= IDLE;
+			state <= INIT;
 			enr <= '0';
 			done <= '0';
 			enadd <= '0';
@@ -98,18 +97,19 @@ BEGIN
 		elsif rising_edge(clk) then
 				case state is
                     when INIT =>
-                        addra <= (others => '0');
-                        addrb <= "0100000000";
-                        counter <= (others => '0');
-                        enr <= '1';
-                        s <= '1';
                         if s = '1' then
-                            addra(7 downto 0) <= counter;
-                            addrb(7 downto 0) <= counter;
-                            counter <= counter + '1';
-                            if s = '0' then
-                                state <= IDLE;
-                            end if;
+                            addra <= (others => '0');
+                            addrb <= "0100000000";
+                            counter <= (others => '0');
+                            s <= '0';
+                        end if;
+                        enr <= '1';
+                        addra(7 downto 0) <= counter;
+                        addrb(7 downto 0) <= counter;
+                        counter <= counter + '1';
+                        if counter = 255 then
+                            enr <= '0';
+                            state <= IDLE;
                         end if;
 					when IDLE =>
 						enr <= '0';
@@ -118,7 +118,7 @@ BEGIN
 						if strt = '1' then
 							res <= (others => '0');
 							if sw /= "00000000" then
-								done <= '0';
+								done <= '1';
 								addra <= (others => '0');
 								addrb <= "0100000000";
 								enr <= '1';
@@ -163,7 +163,7 @@ BEGIN
 						state <= IDLE;
 				end case;
 				if swrst = RSTDEF then
-					state <= IDLE;
+					state <= INIT;
 					enr <= '0';
 					done <= '0';
 					enadd <= '0';

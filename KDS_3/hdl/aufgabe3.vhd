@@ -65,7 +65,7 @@ BEGIN
    PORT MAP(rst   => rst,
             clk   => clk,
             swrst => swrst,
-            BTN0  => BTN0,
+            BTN0  => not(BTN0),
             BTN1  => '0',
             BTN2  => '0',
             load  => strt,
@@ -78,7 +78,7 @@ BEGIN
             clk   => clk,
             swrst => swrst,
             strt  => strt,
-            sw    => sw,
+            sw    => not(sw),
             res   => res,
             done  => LD0);
 
@@ -89,7 +89,7 @@ BEGIN
             en    => '1',
             swrst => swrst,
             data  => res(15 DOWNTO 0),
-            dpin  => "0000",
+            dpin  => "1111",
             an    => an,
             dp    => dp,
             seg   => seg);
