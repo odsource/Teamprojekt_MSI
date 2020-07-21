@@ -26,7 +26,8 @@ entity ram_test is
          douta: OUT std_logic_vector(17 downto 0);
          doutb: OUT std_logic_vector(17 downto 0);
          ena:   IN std_logic;
-         enb:   IN std_logic);
+         enb:   IN std_logic;
+         data_in:   IN std_logic_vector(17 downto 0));
 end ram_test;
 ----------------------------------------------------------------------
 -- ram_test architecture body
@@ -54,12 +55,8 @@ COMPONENT ram_dp is
         );
 end COMPONENT;
 
-SIGNAL counter: std_logic_vector(7 DOWNTO 0);
-SIGNAL a_data: std_logic_vector(17 downto 0) := "000000000000000000";
-SIGNAL b_data: std_logic_vector(17 downto 0) := "000000000000000000";
-SIGNAL awen: std_logic := '0';
-SIGNAL bwen: std_logic := '0';
-SIGNAL filled: std_logic := '0';
+--SIGNAL counter: std_logic_vector(7 DOWNTO 0) := (others => '0');
+--SIGNAL filled: std_logic := '0';
 begin
 
 ----------------------------------------------------------------------
@@ -71,34 +68,35 @@ ram : ram_dp
         -- Inputs
         A_ADDR        => addra,
         A_CLK         => clka,
-        A_DIN         => a_data,
-        A_WEN         => awen,
+        A_DIN         => data_in,
+        A_WEN         => ena,
         B_ADDR        => addrb,
         B_CLK         => clkb,
-        B_DIN         => b_data,
-        B_WEN         => bwen,
+        B_DIN         => data_in,
+        B_WEN         => enb,
         -- Outputs
         A_DOUT        => douta,
         B_DOUT        => doutb
         );
         
 -- Fill RAM
-PROCESS (ena, enb) is
-begin
-    if ena = '1' and enb = '1' and filled = '0' then
-        awen <= '1';
-        bwen <= '1';
-        if counter = 255 then
-            filled <= '1';
-            awen <= '0';
-            bwen <= '0';
-        end if;
-        a_data(7 downto 0) <= counter;
-        b_data(7 downto 0) <= counter;
-        counter <= counter + '1';
-    else
-    
-    end if;
-end process;
+--PROCESS (clk) is
+--begin
+    --if ena = '1' and enb = '1' and filled = '0' then
+        --awen <= '1';
+        --bwen <= '1';
+        --if counter = 255 then
+            --filled <= '1';
+            --awen <= '0';
+            --bwen <= '0';
+        --end if;
+        --a_data(7 downto 0) <= counter;
+        --b_data(7 downto 0) <= counter;
+        --counter <= counter + '1';
+        --
+    --else
+    --
+    --end if;
+--end process;
 
 end RTL;
