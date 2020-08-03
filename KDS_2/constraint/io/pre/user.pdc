@@ -1,0 +1,57 @@
+# Microsemi I/O Physical Design Constraints file
+
+# User I/O Constraints file 
+
+# Version: v12.2 12.700.0.22
+
+# Family: SmartFusion2 , Die: M2S005 , Package: 144 TQ
+
+# Date generated: Mon Aug  3 13:27:45 2020 
+
+
+# 
+# User Locked I/O Bank Settings
+# 
+
+
+# 
+# Unlocked I/O Bank Settings
+# The I/O Bank Settings can be locked by directly editing this file
+# or by making changes in the I/O Attribute Editor
+# 
+
+
+# 
+# User Locked I/O settings
+# 
+
+set_io BTN1           \
+    -pinname 40       \
+    -fixed yes        \
+    -DIRECTION INPUT
+
+
+set_io BTN2           \
+    -pinname 38       \
+    -fixed yes        \
+    -DIRECTION INPUT
+
+
+
+# 
+# Dedicated Peripheral I/O Settings
+# 
+
+
+# 
+# Unlocked I/O settings
+# The I/Os in this section are unplaced or placed but are not locked
+# the other listed attributes have been applied
+# 
+
+
+#
+#Ports using Dedicated Pins
+
+#
+

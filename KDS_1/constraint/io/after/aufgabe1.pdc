@@ -6,11 +6,13 @@
 
 # Family: SmartFusion2 , Die: M2S005 , Package: 144 TQ
 
-# Date generated: Mon Aug  3 13:19:14 2020 
+# Date generated: Mon Aug  3 13:23:28 2020 
+
 
 # 
 # User Locked I/O Bank Settings
 # 
+
 
 # 
 # Unlocked I/O Bank Settings
@@ -18,21 +20,10 @@
 # or by making changes in the I/O Attribute Editor
 # 
 
+
 # 
 # User Locked I/O settings
 # 
-
-set_io BTN0           \
-    -pinname 42       \
-    -fixed yes        \
-    -DIRECTION INPUT
-
-    
-set_io btn1           \
-    -pinname 40       \
-    -fixed yes        \
-    -DIRECTION INPUT
-
 
 set_io {an[0]}         \
     -pinname 47        \
@@ -56,6 +47,12 @@ set_io {an[3]}         \
     -pinname 39        \
     -fixed yes         \
     -DIRECTION OUTPUT
+
+
+set_io btn0           \
+    -pinname 42       \
+    -fixed yes        \
+    -DIRECTION INPUT
 
 
 set_io clk            \

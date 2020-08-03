@@ -26,12 +26,24 @@ set_io BTN0           \
     -pinname 42       \
     -fixed yes        \
     -DIRECTION INPUT
-
     
-set_io btn1           \
+
+set_io BTN1           \
     -pinname 40       \
     -fixed yes        \
     -DIRECTION INPUT
+
+
+set_io BTN2           \
+    -pinname 38       \
+    -fixed yes        \
+    -DIRECTION INPUT
+
+
+set_io LD0             \
+    -pinname 89        \
+    -fixed yes         \
+    -DIRECTION OUTPUT
 
 
 set_io {an[0]}         \
